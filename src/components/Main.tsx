@@ -1,10 +1,16 @@
 import DriversList from "./DriversList";
+import Map from "./Map";
 
 const Main = () => {
   return (
-    <main className="bg-gray-200">
-      <DriversList />
-    </main>
+    <>
+      <main className="relative flex flex-col h-auto bg-gray-200 md:flex-row">
+        <DriversList />
+        <div className="flex-1">
+          <Map />
+        </div>
+      </main>
+    </>
   );
 };
 
