@@ -3,11 +3,11 @@ import { Location } from "../interfaces/location";
 import { Driver } from "../interfaces/driver";
 
 export const assignDriverMock = (
-  location: Location,
+  location: Location | undefined,
   driver: Driver | undefined
 ): Location[] => {
   const locationIndex = locations.findIndex(
-    (locat) => locat.id === location.id
+    (locat) => locat.id === location?.id
   );
 
   if (locationIndex !== -1) {

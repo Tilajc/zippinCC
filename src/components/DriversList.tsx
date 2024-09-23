@@ -5,9 +5,16 @@ import { Driver } from "../lib/interfaces/driver";
 import { useMyContext } from "../lib/myContext";
 
 const DriversList = () => {
-  const { data, isLoading, isError, error } = useQuery<Driver[], Error>(
+  const { isLoading, isError, error } = useQuery<Driver[], Error>(
     "drivers",
-    fetchDrivers
+    fetchDrivers,
+    {
+      onSuccess: (data) => {
+        if (data) {
+          setDrivers(data);
+        }
+      },
+    }
   );
 
   const { drivers, setDrivers } = useMyContext();
@@ -18,10 +25,6 @@ const DriversList = () => {
 
   if (isError) {
     return <div>Error: {error.message}</div>;
-  }
-
-  if (data) {
-    setDrivers(data);
   }
 
   return (

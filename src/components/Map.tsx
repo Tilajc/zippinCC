@@ -4,58 +4,42 @@ import { Location } from "../lib/interfaces/location";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { useMyContext } from "../lib/myContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import L from "leaflet";
 import { assignDriverMock, deleteAssignationMock } from "../lib/api/services";
 
 const createCustomIcon = (color: string) => {
   return L.divIcon({
     className: `${color} rounded-full`,
-    html: `<div style="width: 4rem; height: 4rem;"></div>`,
+    html: `<div></div>`,
   });
 };
 
 const Map = () => {
-  const { data, isLoading, isError, error } = useQuery<Location[], Error>(
+  const { isLoading, isError, error } = useQuery<Location[], Error>(
     "locations",
-    fetchLocations
+    fetchLocations,
+    {
+      onSuccess: (data) => {
+        if (data) {
+          setLocations(data);
+        }
+      },
+    }
   );
   const { selectedDriver } = useMyContext();
-  const [selectedLocation, setSelectedLocation] = useState<
-    Location | undefined
-  >(undefined);
   const [locations, setLocations] = useState<Location[]>([]);
 
-  useEffect(() => {
-    if (data) {
-      setLocations(data);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (selectedLocation && selectedDriver) {
-      const updatedLocations = assignDriverMock(
-        selectedLocation,
-        selectedDriver
-      );
-      setLocations(updatedLocations);
-
-      setSelectedLocation(undefined);
-    }
-  }, [selectedLocation, selectedDriver]);
-
   const handleClick = (location: Location | undefined) => {
-    if (location?.driver) {
-      const updatedLocations = deleteAssignationMock(location);
-      setLocations(updatedLocations);
-      setSelectedLocation(undefined);
-    } else {
-      setSelectedLocation(location);
+    if (selectedDriver) {
+      if (location?.driver) {
+        const updatedLocations = deleteAssignationMock(location);
+        setLocations(updatedLocations);
+      } else {
+        const updatedLocations = assignDriverMock(location, selectedDriver);
+        setLocations(updatedLocations);
+      }
     }
-  };
-
-  const assignDriverColor = (color: string | undefined) => {
-    return color ? color : "bg-red-600";
   };
 
   if (isLoading) {
@@ -79,7 +63,7 @@ const Map = () => {
       />
 
       {locations?.map((location) => {
-        const color = assignDriverColor(location.driver?.color);
+        const color = location.driver ? location.driver.color : "bg-red-600";
 
         return (
           <Marker
