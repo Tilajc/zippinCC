@@ -1,50 +1,23 @@
-# React + TypeScript + Vite
+# ZIPPIN Coding Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
 
-Currently, two official plugins are available:
+Mostrar un mapa con puntos respectivos a ubicaciones donde hay que entregar envíos (20 ubicaciones).
+Ver al costado del mapa un listado de 5 choferes, que hacen las entregas.
+Generar una interacción para que el usuario pueda asignarle uno o más puntos a los choferes. Cada punto es asignado a un chofer (o ninguno).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Install dependencies
 
-## Expanding the ESLint configuration
+    npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Setup environment file
 
-- Configure the top-level `parserOptions` property like this:
+In this case the enviroment file is included in the git clone
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Run App
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+    npm run mock
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## Author
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Tilatti Juan Cruz
